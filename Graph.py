@@ -101,3 +101,55 @@ class WeightedGraph:
     # Generate all permutations of cities
     cities = list(self.cityList.keys())
     for path in permutations(cities):
+        # Calculate total distance for current permutation
+        total_distance = 0
+        for i in range(len(path) - 1):
+            if path[i] in self.cityList and path[i + 1] in self.cityList[path[i]]:
+                total_distance += self.cityList[path[i]][path[i + 1]]
+            else:
+                total_distance = float{'inf'}
+                break  # Break if path is invalid
+        # Check if current permutation is shorter than the current shortest path
+        if total_distance < shortest_distance:
+            shortest_distance = total_distance
+            shortest_path = path
+          
+    return shortest_path, shortest_distance
+
+petaJawaTimur = WeightedGraph()
+petaJawaTimur.tambahkanKota("Surabaya")
+petaJawaTimur.tambahkanKota("Lamongan")
+petaJawaTimur.tambahkanKota("Bojonegoro")
+petaJawaTimur.tambahkanKota("Ngawi")
+petaJawaTimur.tambahkanKota("Madiun")
+petaJawaTimur.tambahkaKota("Ponorogo")
+petaJawaTimur.tambahkanKota("Trenggalek")
+petaJawaTimur.tambahkanKota("Tulungagung")
+petaJawaTimur.tambahkanKota("Blitar")
+petaJawaTimur.tambahkanKota("Kepanjen")
+petaJawaTimur.tambahkanKota("Malang")
+petaJawaTimur.tambahkanKota("Lawang")
+petaJawaTimur.tambahkanKota("Sidoarjo")
+
+petaJawaTimur.tambahkanJalan("Surabaya","Lamongan", 46)
+petaJawaTimur.tambahkanJalan("Lamongan","Bojonegoro", 88)
+petaJawaTimur.tambahkanJalan("Bojonegoro","Ngawi", 75)
+petaJawaTimur.tambahkanJalan("Ngawi","Madiun", 51)
+petaJawaTimur.tambahkanJalan("Madiun","Ponorogo", 43)
+petaJawaTimur.tambahkanJalan("Ponorogo","Trenggalek", 66)
+petaJawaTimur.tambahkanJalan("Trenggalek","Tulungagung", 44)
+petaJawaTimur.tambahkanJalan("Tulungagung","Blitar", 40)
+petaJawaTimur.tambahkanJalan("Blitar","Kepanjen", 47)
+petaJawaTimur.tambahkanJalan("Kepanjen","Malang", 26)
+petaJawaTimur.tambahkanJalan("Malang","Lawang", 61)
+petaJawaTimur.tambahkanJalan("Lawang","Sidoarjo", 50)
+petaJawaTimur.tambahkanJalan("Sidoarjo","Surabaya", 38)
+
+petaJawaTimur.printGraph()
+shortest_distance = petaJawaTimur.dijkstral("Surabaya")
+print("Jarak kota terdekat dari Surabaya adalah :")
+for city, distance in shortest_distance.items():
+    print(city, ":", distance)
+shortest_path, shortest_distance = petaJawaTimur.tsp()
+print("Shortest TSP path:", shortest_path)
+print("Shortest TSP distance:", shortest_distance)
